@@ -1,7 +1,11 @@
+import datetime
+
+
 class User:
-    def __init__(self, name, age, cpf, email, pwd, active):
+    def __init__(self, id, name, birth: datetime, cpf, email, pwd, active):
+        self.id = id
         self.name = name
-        self.age = age
+        self.birth = birth
         self.cpf = cpf
         self.email = email
         self.pwd = pwd
