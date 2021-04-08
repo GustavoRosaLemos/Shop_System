@@ -24,5 +24,5 @@ class DatabaseController:
         except:
             categorys = open("Model/Category.txt", "x")
 
-        #print("Banco de dados iniciado!")
+        print("Banco de dados iniciado!")
 
