@@ -60,3 +60,6 @@ class ProductController():
         for i in range(len(lista)):
             if lista[i]["id"] == id:
                 lista.pop(i)
+
+    def buy(self, product, user):
+        print("Produto COMPRADO!")
