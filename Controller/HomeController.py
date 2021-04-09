@@ -2,6 +2,7 @@ from View import HomeView
 import string
 import datetime
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -18,7 +19,6 @@ class main:
     def initialize(self):
         HomeView.main().showhome()
         HomeView.main().verifyhaslogin()
-
 
     def verifylogin(self, email, password):
         if email == "":
@@ -41,7 +41,6 @@ class main:
         else:
             from View import UserView
             UserView.main().showuserhome(user)
-
 
     def register(self, name, birth, cpf, email, password):
         if name == "":
@@ -75,7 +74,8 @@ class main:
                 pass
 
         if " " in birth:
-            print(f"{bcolors.FAIL}Sua data de nascimento não pode conter espaços, formato correto (DD/MM/AAAA){bcolors.ENDC}")
+            print(
+                f"{bcolors.FAIL}Sua data de nascimento não pode conter espaços, formato correto (DD/MM/AAAA){bcolors.ENDC}")
             HomeView.main().showregister()
         sbirth = birth.split("/")
         if len(sbirth) > 3:
@@ -116,7 +116,7 @@ class main:
         isOnlySame = True
         for i in range(len(cpf)):
             if not i == 0:
-                if not cpf[i] == cpf[i-1]:
+                if not cpf[i] == cpf[i - 1]:
                     isOnlySame = False
             if not cpf[i] in string.digits:
                 print(f"{bcolors.FAIL}CPF inválido!{bcolors.ENDC}")
