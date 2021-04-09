@@ -1,1 +1,1 @@
-{"usersid":1, "categoryid":1, "productsid": 1}
+ids = {"usersid":1, "categoryid":1, "productsid": 1}
