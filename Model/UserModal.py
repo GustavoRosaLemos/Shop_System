@@ -2,7 +2,7 @@ import datetime
 
 
 class User:
-    def __init__(self, id, name, birth, cpf, email, pwd, isAdmin):
+    def __init__(self, id, name, birth, cpf, email, pwd, admin):
         if not id == "0":
             self.id = id
         self.name = name
@@ -10,7 +10,7 @@ class User:
         self.cpf = cpf
         self.email = email
         self.pwd = pwd
-        self.isAdmin = isAdmin
+        self.admin = admin
 
     def setid(self, id):
         self.id = id
@@ -30,8 +30,8 @@ class User:
     def setpwd(self, pwd):
         self.pwd = pwd
 
-    def setisadmin(self, isAdmin):
-        self.isAdmin = isAdmin
+    def setadmin(self, admin):
+        self.admin = admin
 
     def getid(self):
         return self.id
@@ -51,5 +51,5 @@ class User:
     def getpwd(self):
         return self.pwd
 
-    def getisAdmin(self):
-        return self.isAdmin
+    def getadmin(self):
+        return self.admin
