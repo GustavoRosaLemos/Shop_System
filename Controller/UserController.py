@@ -1,7 +1,4 @@
 from ast import literal_eval
-from Model import UserModal
-#UserModal.User()
-
 
 class UserControl:
     # def __init__(self):
