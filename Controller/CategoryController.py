@@ -54,3 +54,5 @@ class CategoryController():
         for i in range(len(lista)):
             if lista[i]["id"] == id:
                 lista.pop(i)
+        with open(locale, "w") as file:
+            file.write(str(lista))
