@@ -7,8 +7,8 @@ class UserControl:
     # def __init__(self):
     #     super(UserController, self).__init__()
 
-    def add_user(self, user):
-        with open("Model/Users.txt", "r") as file:
+    def add_user(self, user, locale):
+        with open(locale, "r") as file:
             file = file.read()
             lista = literal_eval(file)
         if len(lista) == 0:
@@ -26,8 +26,8 @@ class UserControl:
         with open("Model/Users.txt", "w") as file:
             file.write(str(lista))
 
-    def get_users(self):
-        with open("Model/Users.txt", "r") as file:
+    def get_users(self, locale):
+        with open(locale, "r") as file:
             file = file.read()
             try:
                 lista = literal_eval(file)
@@ -35,8 +35,8 @@ class UserControl:
                 raise Exception("Erro no banco de dados. Não foi possível converter ID.")
         return lista
 
-    def get_by_id(self, id):
-        with open("Model/Users.txt", "r") as file:
+    def get_by_id(self, id, locale):
+        with open(locale, "r") as file:
             file = file.read()
             try:
                lista = literal_eval(file)
@@ -49,8 +49,8 @@ class UserControl:
             else:
                 return []
 
-    def update(self, user):
-        with open("Model/Users.txt", "r") as file:
+    def update(self, user, locale):
+        with open(locale, "r") as file:
             file = file.read()
             lista = literal_eval(file)
         for i in range(len(lista)):
@@ -67,5 +67,5 @@ class UserControl:
                     lista[i]["password"] = user.getpwd()
                 if not user.getadmin() == lista[i]["admin"]:
                     lista[i]["admin"] = user.getadmin()
-        with open("Model/Users.txt", "w") as file:
+        with open(locale, "w") as file:
             file.write(str(lista))
