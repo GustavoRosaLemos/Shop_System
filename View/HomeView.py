@@ -37,7 +37,7 @@ class main:
         print(("\t"*10) + f"{bcolors.OKCYAN}| $$_____| $$__/ $$| $$__| $$| $$  | $$      | $$__/ $$| $$ \$$$$| $$_____  _| $$_ | $$ \$$$$| $$_____ {bcolors.ENDC}")
         print(("\t"*10) + f"{bcolors.OKCYAN}| $$     \ $$    $$ \$$    $$| $$  | $$       \$$    $$| $$  \$$$| $$     \|   $$ \| $$  \$$$| $$     \ {bcolors.ENDC}")
         print(("\t"*10) + f"{bcolors.OKCYAN} \$$$$$$$$ \$$$$$$   \$$$$$$  \$$   \$$        \$$$$$$  \$$   \$$ \$$$$$$$$ \$$$$$$ \$$   \$$ \$$$$$$$${bcolors.ENDC}")
-        print(("\t" * 15) + f"{bcolors.WARNING}Tudo pela metade do dobro do preço, confira nossas promoções!{bcolors.ENDC}")
+        print(("\t" * 16) + f"{bcolors.WARNING}Onde coisas inuteis são vendidas por preços absurdos!{bcolors.ENDC}")
 
 
     def showlogin(self):
