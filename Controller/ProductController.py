@@ -2,8 +2,6 @@ from ast import literal_eval
 
 
 class ProductController():
-
-
     def add_product(self, product, locale):
         with open(locale, "r") as file:
             file = file.read()
@@ -40,7 +38,7 @@ class ProductController():
                     break
             else:
                 return []
-    def uptade(self, product, locale):
+    def update(self, product, locale):
         with open(locale, "r") as file:
             file = file.read()
             lista = literal_eval(file)
