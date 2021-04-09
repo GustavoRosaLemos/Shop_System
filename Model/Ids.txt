@@ -1,1 +1,1 @@
-ids = {"usersid":1, "categoryid":1, "productsid": 1}
+[{"user_id":1,"Product_id":2},{"user_id":2,"Product_id":4}]
