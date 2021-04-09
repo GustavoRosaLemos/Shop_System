@@ -48,6 +48,33 @@ class UserControl:
                     break
             else:
                 return []
+    def get_by_email(self, email, locale):
+        with open(locale, "r") as file:
+            file = file.read()
+            try:
+               lista = literal_eval(file)
+            except:
+                raise Exception("Erro no banco de dados. Não foi possível converter ID.")
+            for i in range(len(lista)):
+                if lista[i]["email"] == email:
+                    return lista[i]
+                    break
+            else:
+                return []
+
+    def get_by_cpf(self, cpf, locale):
+        with open(locale, "r") as file:
+            file = file.read()
+            try:
+               lista = literal_eval(file)
+            except:
+                raise Exception("Erro no banco de dados. Não foi possível converter ID.")
+            for i in range(len(lista)):
+                if lista[i]["cpf"] == cpf:
+                    return lista[i]
+                    break
+            else:
+                return []
 
     def update(self, user, locale):
         with open(locale, "r") as file:
