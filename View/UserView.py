@@ -12,6 +12,34 @@ class bcolors:
     UNDERLINE = '\033[4m'
 cart = []
 class main:
+    def putcard(self, product, user, cart):
+        print(f"{bcolors.BOLD}Insida os dados do seu cartão:{bcolors.ENDC}")
+        number = input("Numero: ")
+        cvv = input("cvv: ")
+        date = input("Data: ")
+        if number == "":
+            print(f"{bcolors.FAIL}Você precisa inserir o numero do cartão!{bcolors.ENDC}")
+            main.putcard(self, product, user, cart)
+        if cvv == "":
+            print(f"{bcolors.FAIL}Você precisa inserir o numero do cvv!{bcolors.ENDC}")
+            main.putcard(self, product, user, cart)
+        if date == "":
+            print(f"{bcolors.FAIL}Você precisa inserir o numero de vencimento do cartão!{bcolors.ENDC}")
+            main.putcard(self, product, user, cart)
+
+        from Controller import CardController
+        card = CardController.cardcontrol().get_by_number(number, "Model/Cards.txt")
+        print(card)
+        if card == []:
+            print(f"{bcolors.FAIL} O cartão que você inseriu não existe!{bcolors.ENDC}")
+            main.putcard(self, product, user, cart)
+
+        if not card['cvv'] == cvv and not card['date'] == date:
+            print(f"{bcolors.FAIL} Os dados do cartão que você inseriu não estão corretos!{bcolors.ENDC}")
+            main.putcard(self, product, user, cart)
+
+        from Controller import ProductController
+        ProductController.ProductController().buy(cart, user, card)
     def showuserproducts(self, user, category):
         from Controller import ProductController
         print(f"{bcolors.BOLD}Selecione um produto:")
@@ -34,13 +62,13 @@ class main:
             main.showusercategorys()
         product = products[product - 1]
         global cart
+        print("adicionado: "+str(product))
         cart.append(product)
         another = input("Continuar Comprando: ")
         if another.lower() == "sim" or another.lower() == "sin" or another.lower() == "si" or another.lower() == "s" or another.lower() == "yes":
             main.showusercategorys(self, user)
 
-
-        ProductController.ProductController().buy(product, user)
+        main.putcard(self, product, user, cart)
     def showusercategorys(self, user):
         print(f"{bcolors.BOLD}Selecione uma categoria:")
         from Controller import CategoryController
