@@ -21,7 +21,26 @@ class main:
 
 
     def verifylogin(self, email, password):
-        pass
+        if email == "":
+            print(f"{bcolors.FAIL}É necessario inserir um email!")
+        if password == "":
+            print(f"{bcolors.FAIL}É necessario inserir uma senha!")
+
+        from Controller import UserController
+        user = UserController.UserControl().get_by_email(email, "Model/Users.txt")
+        if user == []:
+            print(f"{bcolors.FAIL}O email ou a senha estão incorretos!{bcolors.ENDC}")
+            HomeView.main().showlogin()
+        if not str(user["email"]) == email and not str(user["pasword"]) == password:
+            print(f"{bcolors.FAIL}O email ou a senha estão incorretos!{bcolors.ENDC}")
+            HomeView.main().showlogin()
+
+        if user["admin"] == True:
+            pass
+            #pagina de admin
+        else:
+            from View import UserView
+            UserView.main().showuserhome(user)
 
 
     def register(self, name, birth, cpf, email, password):
@@ -138,4 +157,17 @@ class main:
             print(f"{bcolors.FAIL}A sua senha deve possuir pelo menos 5 caracteres!{bcolors.ENDC}")
             HomeView.main().showregister()
 
-        print("Registrado!")
+        from Model import UserModal
+        from Controller import UserController
+
+        if not UserController.UserControl().get_by_email(email, "Model/Users.txt") == []:
+            print(f"{bcolors.FAIL}Já existe um usuario com esse email!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if not UserController.UserControl().get_by_cpf(cpf, "Model/Users.txt") == []:
+            print(f"{bcolors.FAIL}Já existe um usuario com esse cpf!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        try:
+            UserController.UserControl().add_user(UserModal.User("0", name, birth, cpf, email, password, False), "Model/Users.txt")
+            print(f"{bcolors.OKGREEN}Usuário cadastrado com sucesso!{bcolors.ENDC}")
+        except:
+            print(f"{bcolors.WARNING}Não foi possível realizar o cadastro, tente novamente em alguns anos.{bcolors.ENDC}")
