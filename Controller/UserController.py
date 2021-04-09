@@ -33,11 +33,17 @@ class UserControl:
             return ids["usersid"]
 
     def update(self, id):
-        with open("../DatabaseController/Users", "w") as file:
+        lista = []
+        with open("../DatabaseController/Users.txt", "r") as file:
             file.read()
             try:
-                id.file.literal_eval(file)
+                lista = literal_eval(file)
+            except:
+                raise Exception("Não foi possível ler os arquios para atualizar.")
+        with open("../DatabaseController/Users.txt", "w") as file:
+            try:
+                file.write(lista)
             except:
                 raise Exception("Não foi possível atualizar.")
 
-            return id["users"]
+        print(lista)
