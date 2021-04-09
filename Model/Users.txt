@@ -1,1 +1,1 @@
-[]
+[{'id': 1, 'name': 'Carlos Jose', 'birth': '12/02/1997', 'cpf': '90510647057', 'email': 'meuemail@email.com', 'password': 'password', 'admin': False}]
