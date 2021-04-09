@@ -1,14 +1,18 @@
 class Card:
-    def __init__(self, number, ccv, funds):
+    def __init__(self, number, ccv, date, funds):
         self.number = number
         self.ccv = ccv
+        self.date = date
         self.funds = funds
 
-    def get_number(self):
+    def getnumber(self):
         return self.number
 
-    def get_ccv(self):
+    def getccv(self):
         return self.ccv
 
-    def get_funds(self):
+    def getdate(self):
+        return self.date
+
+    def getfunds(self):
         return self.funds
