@@ -24,5 +24,13 @@ class DatabaseController:
             with open("Model/Category.txt", "w") as file:
                 file.write("[]")
 
+        # Criar a tabela Cards caso não exista
+        try:
+            categorys = open("Model/Category.txt", "r")
+        except:
+            categorys = open("Model/Category.txt", "x")
+            with open("Model/Category.txt", "w") as file:
+                file.write("[]")
+
         #print("Banco de dados iniciado!")
 
