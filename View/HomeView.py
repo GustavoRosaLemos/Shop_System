@@ -27,10 +27,17 @@ class main:
 
 
     def showhome(self):
-        print("-" * 187)
-        print(("\t"*19) + "=" *31)
-        print(("\t"*19) + "="+ (" "*9) + "LOJA ONLINE" + (" "*9) + "=")
-        print(("\t"*19) + "=" * 31)
+        print("-"*187)
+        print(("\t"*10) + f"{bcolors.OKCYAN} __        ______      _____   ______          ______   __    __  __        ______  __    __  ________ {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}|  \      /      \    |     \ /      \        /      \ |  \  |  \|  \      |      \|  \  |  \|        \ {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$     |  $$$$$$\    \$$$$$|  $$$$$$\      |  $$$$$$\| $$\ | $$| $$       \$$$$$$| $$\ | $$| $$$$$$$${bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$     | $$  | $$      | $$| $$__| $$      | $$  | $$| $$$\| $$| $$        | $$  | $$$\| $$| $$__    {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$     | $$  | $$ __   | $$| $$    $$      | $$  | $$| $$$$\ $$| $$        | $$  | $$$$\ $$| $$  \   {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$     | $$  | $$|  \  | $$| $$$$$$$$      | $$  | $$| $$\$$ $$| $$        | $$  | $$\$$ $$| $$$$$   {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$_____| $$__/ $$| $$__| $$| $$  | $$      | $$__/ $$| $$ \$$$$| $$_____  _| $$_ | $$ \$$$$| $$_____ {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN}| $$     \ $$    $$ \$$    $$| $$  | $$       \$$    $$| $$  \$$$| $$     \|   $$ \| $$  \$$$| $$     \ {bcolors.ENDC}")
+        print(("\t"*10) + f"{bcolors.OKCYAN} \$$$$$$$$ \$$$$$$   \$$$$$$  \$$   \$$        \$$$$$$  \$$   \$$ \$$$$$$$$ \$$$$$$ \$$   \$$ \$$$$$$$${bcolors.ENDC}")
+        print(("\t" * 15) + f"{bcolors.WARNING}Tudo pela metade do dobro do preço, confira nossas promoções!{bcolors.ENDC}")
 
 
     def showlogin(self):
@@ -43,7 +50,7 @@ class main:
     def showregister(self):
         print(f"\n{bcolors.BOLD}Digite os dados a baixo para realizar o cadastro.{bcolors.ENDC}")
         name = input("Nome Completo: ")
-        birth = input("Data de Nascimento: ")
+        birth = input("Data de Nascimento (DD/MM/AAAA): ")
         cpf = input("CPF: ")
         email = input("Email: ")
         password = input("Senha: ")
