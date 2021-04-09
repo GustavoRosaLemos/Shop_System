@@ -43,6 +43,7 @@ class main:
             UserView.main().showuserhome(user)
 
     def register(self, name, birth, cpf, email, password):
+        from View import HomeView
         if name == "":
             print(f"{bcolors.FAIL}Seu nome não pode ser vazio!{bcolors.ENDC}")
             HomeView.main().showregister()
@@ -169,5 +170,7 @@ class main:
         try:
             UserController.UserControl().add_user(UserModal.User("0", name, birth, cpf, email, password, False), "Model/Users.txt")
             print(f"{bcolors.OKGREEN}Usuário cadastrado com sucesso!{bcolors.ENDC}")
+            from View import HomeView
+            HomeView.main().showlogin(self)
         except:
             print(f"{bcolors.WARNING}Não foi possível realizar o cadastro, tente novamente em alguns anos.{bcolors.ENDC}")
