@@ -21,17 +21,15 @@ class main:
 
 
     def verifylogin(self, email, password):
-        if not "@" in email or " " in email or not "." in email:
-            print(f"{bcolors.FAIL}O valor inserido não é um endereço de email!{bcolors.ENDC}")
-            HomeView.main().showlogin()
-        elif " " in password:
-            print(f"{bcolors.FAIL}A senha não pode possuir espaços!{bcolors.ENDC}")
-            HomeView.main().showlogin()
+        pass
 
 
     def register(self, name, birth, cpf, email, password):
         if name == "":
             print(f"{bcolors.FAIL}Seu nome não pode ser vazio!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if not " " in name:
+            print(f"{bcolors.WARNING}Você deve inserir seu nome completo!{bcolors.ENDC}")
             HomeView.main().showregister()
         if len(name) <= 2:
             print(f"{bcolors.FAIL}Seu nome é muito pequeno!{bcolors.ENDC}")
@@ -86,7 +84,7 @@ class main:
                 date = datetime.datetime.now()
                 date = date.strftime('%Y')
                 if not int(sbirth[i]) >= 1900 or not (int(sbirth[i]) <= int(date)):
-                    print(f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 1900 a {datetime.date.today()} meses{bcolors.ENDC}")
+                    print(f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 1900 a {date} meses{bcolors.ENDC}")
                     HomeView.main().showregister()
         if cpf == "":
             print(f"{bcolors.FAIL}CPF inválido!{bcolors.ENDC}")
@@ -118,5 +116,26 @@ class main:
         if numbers[10] != expected_digit:
             print(f"{bcolors.FAIL}CPF inválido!{bcolors.ENDC}")
             HomeView.main().showregister()
-        if
+        if email == "":
+            print(f"{bcolors.FAIL}Você precisa inserir um endereço de email!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if not "@" in email:
+            print(f"{bcolors.FAIL}O email inserido não é um email real!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if not "." in email:
+            print(f"{bcolors.FAIL}O email insiredo não é um email real!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if " " in email:
+            print(f"{bcolors.FAIL}O email não pode possuir espaços!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if password == "":
+            print(f"{bcolors.FAIL}Você precisa inserir uma senha!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if " " in password:
+            print(f"{bcolors.FAIL}A sua senha não pode possuir espaços!{bcolors.ENDC}")
+            HomeView.main().showregister()
+        if len(password) < 5:
+            print(f"{bcolors.FAIL}A sua senha deve possuir pelo menos 5 caracteres!{bcolors.ENDC}")
+            HomeView.main().showregister()
 
+        print("Registrado!")
