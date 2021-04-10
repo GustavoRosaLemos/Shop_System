@@ -16,16 +16,8 @@ class cardcontrol:
                        "date": card.getdate(),
                        "funds": card.getfunds()
                        })
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-        lista.append({"number": card.getnumber(),
-                      "cvv": card.getccv(),
-                      "date": card.getdate(),
-                      "funds": card.getfunds()
-                      })
         with open(locale, "w") as file:
-            file.write(str(lista))
+            file.write(str(cards))
             file.close()
 
     def getcards(self):
@@ -43,27 +35,13 @@ class cardcontrol:
         for i in range(len(cards)):
             if cards[i]["number"] == number:
                 cards[i]["funds"] = funds
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-        for i in range(len(lista)):
-            if lista[i]["number"] == number:
-                lista[i]["funds"] = funds
-        file = open(locale, "w")
-        file.write(str(lista))
-        file.close()
+        with open(locale, "w") as file:
+            file.write(str(cards))
 
     def delete(self, number, locale):
         for i in range(len(cards)):
             if cards[i]["number"] == number:
                 cards.pop(i)
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-            file.close()
-        for i in range(len(lista)):
-            if lista[i]["number"] == number:
-                lista.pop(i)
         with open(locale, "w") as file:
-            file.write(str(lista))
+            file.write(str(cards))
             file.close()
