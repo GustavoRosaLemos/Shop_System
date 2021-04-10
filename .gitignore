@@ -1063,3 +1063,4 @@ venv/Scripts/python.exe
 venv/Scripts/pythonw.exe
 .idea/Shop_System.iml
 .idea/misc.xml
+*.pyc
