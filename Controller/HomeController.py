@@ -27,13 +27,15 @@ class main:
             print(f"{bcolors.FAIL}É necessario inserir uma senha!")
 
         from Controller import UserController
-        user = UserController.UserControl().get_by_email(email, "Model/Users.txt")
+        user = UserController.UserControl().get_by_email(email)
         if user == []:
             print(f"{bcolors.FAIL}O email ou a senha estão incorretos!{bcolors.ENDC}")
             HomeView.main().showlogin()
-        if not str(user["email"]) == email and not str(user["pasword"]) == password:
+        if not user["email"] == email or not user["password"] == password:
             print(f"{bcolors.FAIL}O email ou a senha estão incorretos!{bcolors.ENDC}")
             HomeView.main().showlogin()
+
+
 
         if user["admin"] == True:
             pass
@@ -161,16 +163,16 @@ class main:
         from Model import UserModal
         from Controller import UserController
 
-        if not UserController.UserControl().get_by_email(email, "Model/Users.txt") == []:
+        if not UserController.UserControl().get_by_email(email) == []:
             print(f"{bcolors.FAIL}Já existe um usuario com esse email!{bcolors.ENDC}")
             HomeView.main().showregister()
-        if not UserController.UserControl().get_by_cpf(cpf, "Model/Users.txt") == []:
+        if not UserController.UserControl().get_by_cpf(cpf) == []:
             print(f"{bcolors.FAIL}Já existe um usuario com esse cpf!{bcolors.ENDC}")
             HomeView.main().showregister()
         try:
             UserController.UserControl().add_user(UserModal.User("0", name, birth, cpf, email, password, False), "Model/Users.txt")
-            print(f"{bcolors.OKGREEN}Usuário cadastrado com sucesso!{bcolors.ENDC}")
             from View import HomeView
-            HomeView.main().showlogin(self)
+            HomeView.main().showlogin()
+            print(f"{bcolors.OKGREEN}Usuário cadastrado com sucesso!{bcolors.ENDC}")
         except:
             print(f"{bcolors.WARNING}Não foi possível realizar o cadastro, tente novamente em alguns anos.{bcolors.ENDC}")
