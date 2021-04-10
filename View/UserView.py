@@ -40,6 +40,7 @@ class main:
 
         from Controller import ProductController
         ProductController.ProductController().buy(cart, user, card)
+
     def showuserproducts(self, user, category):
         from Controller import ProductController
         print(f"{bcolors.BOLD}Selecione um produto:")
@@ -48,7 +49,7 @@ class main:
         for i in range(len(products)):
             if products[i]['category'] == str(category):
                 print(f"{i+1} - {products[i]['name']} - {bcolors.OKGREEN}R${products[i]['price']}{bcolors.ENDC}")
-        print("0 - Sair")
+        print("0 - Voltar")
         print(f"{bcolors.WARNING} EXISTEM {random.randint(1000000, 9999999999999999999999)} USUARIOS INTERESSADOS NO PRODUTO QUE VOCÊ ESTÁ VENDO AGORA!{bcolors.ENDC}")
         print(f"{bcolors.WARNING} !!!!50% OFF!!!! VOCÊ TEM 5 SEGUNDOS PARA APROVEITAR A PROMOÇÃO EXCLUSIVA!{bcolors.ENDC}")
 
@@ -57,38 +58,39 @@ class main:
             product = int(product)
         except:
             main.showuserproducts(self, user, category)
+        if product == 0:
+            main.showuserhome(self, user)
         if not product >= 1 and not product <= len(products):
             print(f"{bcolors.WARNING}Selecione um produto válido!{bcolors.ENDC}")
             main.showusercategorys()
         product = products[product - 1]
         global cart
-        print("adicionado: "+str(product))
         cart.append(product)
         another = input("Continuar Comprando: ")
         if another.lower() == "sim" or another.lower() == "sin" or another.lower() == "si" or another.lower() == "s" or another.lower() == "yes":
             main.showusercategorys(self, user)
-
         main.putcard(self, product, user, cart)
+
     def showusercategorys(self, user):
-        print(f"{bcolors.BOLD}Selecione uma categoria:")
+        print(f"{bcolors.BOLD}Selecione uma categoria:{bcolors.ENDC}")
         from Controller import CategoryController
         categorys = CategoryController.CategoryController().get_categories("Model/Category.txt")
         for i in range(len(categorys)):
             print(f"{i+1} - {categorys[i]['name']}")
         print("0 - Sair")
-
         category = input("")
 
         try:
             category = int(category)
         except:
             main.showusercategorys(self, user)
+        if category == 0:
+            quit()
         if not category >= 1 and not category <= len(categorys):
-            print(f"{bcolors.WARNING}Selecione um produto válido!")
+            print(f"{bcolors.WARNING}Selecione um produto válido!{bcolors.ENDC}")
             main.showusercategorys(self, user)
 
         category = categorys[category-1]["id"]
-        print("Categoria: " + category)
         main.showuserproducts(self, user, category)
 
     def showuserhome(self, user):
