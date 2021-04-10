@@ -1,58 +1,52 @@
 from ast import literal_eval
 
+categories = []
+with open("Model/Category.txt", "r") as file:
+    file = file.read()
+    try:
+        lista = literal_eval(file)
+    except:
+        raise Exception("Erro no banco de dados. Não foi possível converter ID.")
+categories = lista
 
 class CategoryController():
     def add_category(self, category, locale):
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-        if len(lista) == 0:
+        if len(categories) == 0:
             id = 1
         else:
-            id = str(int(lista[len(lista) - 1]["id"]) + 1)
-        lista.append({"id": id,
+            id = str(int(categories[len(categories) - 1]["id"]) + 1)
+        categories.append({"id": id,
                       "name": category.getname()
                       })
         with open(locale, "w") as file:
-            file.write(str(lista))
-    def get_categories(self, locale):
-        with open(locale, "r") as file:
-            file = file.read()
-            try:
-                lista = literal_eval(file)
-            except:
-                raise Exception("Erro no banco de dados. Não foi possível converter ID.")
-        return lista
-    def get_by_id(self, id, locale):
-        with open(locale, "r") as file:
-            file = file.read()
-            try:
-                lista = literal_eval(file)
-            except:
-                raise Exception("Erro no banco de dados. Não foi possível converter ID.")
-            for i in range(len(lista)):
-                if lista[i]["id"] == id:
-                    return lista[i]
-                    break
-            else:
-                return []
+            file.write(str(categories))
+            file.close()
+
+    def get_categories(self):
+        return categories
+
+    def get_by_id(self, id):
+        for i in range(len(categories)):
+            if categories[i]["id"] == id:
+                return categories[i]
+                break
+        else:
+            return []
+
     def update(self, category, locale):
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-        for i in range(len(lista)):
-            if lista[i]["id"] == category.getid():
-                if not lista[i]["name"] == category.getname():
-                    lista[i]["name"] = category.getname()
+        for i in range(len(categories)):
+            if categories[i]["id"] == category.getid():
+                if not categories[i]["name"] == category.getname():
+                    categories[i]["name"] = category.getname()
 
         with open(locale, "w") as file:
-            file.write(str(lista))
+            file.write(str(categories))
+            file.flush()
+
     def delete(self, id, locale):
-        with open(locale, "r") as file:
-            file = file.read()
-            lista = literal_eval(file)
-        for i in range(len(lista)):
-            if lista[i]["id"] == id:
-                lista.pop(i)
+        for i in range(len(categories)):
+            if categories[i]["id"] == id:
+                categories.pop(i)
         with open(locale, "w") as file:
-            file.write(str(lista))
+            file.write(str(categories))
+            file.flush()
