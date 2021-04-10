@@ -28,9 +28,8 @@ class main:
             main.putcard(self, product, user, cart)
 
         from Controller import CardController
-        card = CardController.cardcontrol().get_by_number(number, "Model/Cards.txt")
-        print(card)
-        if card == []:
+        card = CardController.cardcontrol().get_by_number(number)
+        if not card:
             print(f"{bcolors.FAIL} O cartão que você inseriu não existe!{bcolors.ENDC}")
             main.putcard(self, product, user, cart)
 
@@ -41,11 +40,15 @@ class main:
         from Controller import ProductController
         ProductController.ProductController().buy(cart, user, card)
 
+    def clearcart(self):
+        cart = []
+
     def showuserproducts(self, user, category):
         from Controller import ProductController
-        print(f"{bcolors.BOLD}Selecione um produto:")
+        print(f"{bcolors.BOLD}Selecione um produto:{bcolors.ENDC}")
         from Controller import ProductController
-        products = ProductController.ProductController().get_products("Model/Products.txt")
+        print(category)
+        products = ProductController.ProductController().get_products()
         for i in range(len(products)):
             if products[i]['category'] == str(category):
                 print(f"{i+1} - {products[i]['name']} - {bcolors.OKGREEN}R${products[i]['price']}{bcolors.ENDC}")
@@ -74,7 +77,7 @@ class main:
     def showusercategorys(self, user):
         print(f"{bcolors.BOLD}Selecione uma categoria:{bcolors.ENDC}")
         from Controller import CategoryController
-        categorys = CategoryController.CategoryController().get_categories("Model/Category.txt")
+        categorys = CategoryController.CategoryController().get_categories()
         for i in range(len(categorys)):
             print(f"{i+1} - {categorys[i]['name']}")
         print("0 - Sair")
@@ -105,6 +108,7 @@ class main:
         print(("\t" * 10) + f"{bcolors.OKCYAN}| $$     \ $$    $$ \$$    $$| $$  | $$       \$$    $$| $$  \$$$| $$     \|   $$ \| $$  \$$$| $$     \ {bcolors.ENDC}")
         print(("\t" * 10) + f"{bcolors.OKCYAN} \$$$$$$$$ \$$$$$$   \$$$$$$  \$$   \$$        \$$$$$$  \$$   \$$ \$$$$$$$$ \$$$$$$ \$$   \$$ \$$$$$$$${bcolors.ENDC}")
         print(("\t" * 14) + f"{bcolors.WARNING}WOW você é um cliente registrado, por conta disso os preços custam a metade do dobro!{bcolors.ENDC}")
+
 
         print(f'{bcolors.OKGREEN}Olá {user["name"]}, seja bem vindo!\n{bcolors.ENDC}')
         main.showusercategorys(self, user)
