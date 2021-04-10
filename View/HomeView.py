@@ -25,7 +25,6 @@ class main:
         else:
             main.verifyhaslogin(self)
 
-
     def showhome(self):
         print("-"*187)
         print(("\t"*10) + f"{bcolors.OKCYAN} __        ______      _____   ______          ______   __    __  __        ______  __    __  ________ {bcolors.ENDC}")
@@ -39,13 +38,11 @@ class main:
         print(("\t"*10) + f"{bcolors.OKCYAN} \$$$$$$$$ \$$$$$$   \$$$$$$  \$$   \$$        \$$$$$$  \$$   \$$ \$$$$$$$$ \$$$$$$ \$$   \$$ \$$$$$$$${bcolors.ENDC}")
         print(("\t" * 16) + f"{bcolors.WARNING}Onde coisas inuteis são vendidas por preços absurdos!{bcolors.ENDC}")
 
-
     def showlogin(self):
         print(f"\n{bcolors.BOLD}Digite os dados a baixo para realizar o login.{bcolors.ENDC}")
         email = input("Email: ")
         password = input("Senha: ")
         HomeController.main().verifylogin(email, password)
-
 
     def showregister(self):
         print(f"\n{bcolors.BOLD}Digite os dados a baixo para realizar o cadastro.{bcolors.ENDC}")
