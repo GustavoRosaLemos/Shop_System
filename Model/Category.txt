@@ -1,1 +1,1 @@
-[{"id":"1", "name": "Inutensilios"}, {"id":"2", "name": "Aparatos Magicos"}, {"id":"3", "name": "Filmes Educativos"}]
+[{"id":"1", "name": "Inutensilios"}, {"id":"2", "name": "Aparatos Magicos"}]
