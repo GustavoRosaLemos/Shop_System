@@ -44,7 +44,6 @@ class main:
         cart = []
 
     def showuserproducts(self, user, category):
-        from Controller import ProductController
         print(f"{bcolors.BOLD}Selecione um produto:{bcolors.ENDC}")
         from Controller import ProductController
         print(category)
@@ -65,35 +64,35 @@ class main:
             main.showuserhome(self, user)
         if not product >= 1 and not product <= len(products):
             print(f"{bcolors.WARNING}Selecione um produto válido!{bcolors.ENDC}")
-            main.showusercategorys()
+            main.showusercategories()
         product = products[product - 1]
         global cart
         cart.append(product)
         another = input("Continuar Comprando: ")
         if another.lower() == "sim" or another.lower() == "sin" or another.lower() == "si" or another.lower() == "s" or another.lower() == "yes":
-            main.showusercategorys(self, user)
+            main.showusercategories(self, user)
         main.putcard(self, product, user, cart)
 
-    def showusercategorys(self, user):
+    def showusercategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma categoria:{bcolors.ENDC}")
         from Controller import CategoryController
-        categorys = CategoryController.CategoryController().get_categories()
-        for i in range(len(categorys)):
-            print(f"{i+1} - {categorys[i]['name']}")
+        categories = CategoryController.CategoryController().get_categories()
+        for i in range(len(categories)):
+            print(f"{i+1} - {categories[i]['name']}")
         print("0 - Sair")
         category = input("")
 
         try:
             category = int(category)
         except:
-            main.showusercategorys(self, user)
+            main.showusercategories(self, user)
         if category == 0:
             quit()
-        if not category >= 1 and not category <= len(categorys):
+        if not category >= 1 and not category <= len(categories):
             print(f"{bcolors.WARNING}Selecione um produto válido!{bcolors.ENDC}")
-            main.showusercategorys(self, user)
+            main.showusercategories(self, user)
 
-        category = categorys[category-1]["id"]
+        category = categories[category - 1]["id"]
         main.showuserproducts(self, user, category)
 
     def showuserhome(self, user):
@@ -111,7 +110,7 @@ class main:
 
 
         print(f'{bcolors.OKGREEN}Olá {user["name"]}, seja bem vindo!\n{bcolors.ENDC}')
-        main.showusercategorys(self, user)
+        main.showusercategories(self, user)
 
 
 
