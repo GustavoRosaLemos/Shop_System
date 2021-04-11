@@ -57,9 +57,9 @@ class ProductController():
         with open(locale, "w") as file:
             file.write(str(products))
 
-    def delete(self, id, locale):
+    def delete(self, number, locale):
         for i in range(len(products)):
-            if products[i]["number"] == products:
+            if products[i]["number"] == number:
                 products.pop(i)
         with open(locale, "w") as file:
             file.write(str(products))
