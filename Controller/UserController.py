@@ -71,3 +71,11 @@ class UserControl:
                     users[i]["admin"] = user.getadmin()
         with open(locale, "w") as file:
             file.write(str(users))
+
+    def delete(self, cpf, locale):
+        for i in range(len(users)):
+            if users[i]["cpf"] == cpf:
+                users.pop(i)
+        with open(locale, "w") as file:
+            file.write(str(users))
+            file.close()
