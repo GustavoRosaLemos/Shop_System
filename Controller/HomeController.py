@@ -38,8 +38,8 @@ class main:
 
 
         if user["admin"] == True:
-            pass
-            #pagina de admin
+            from View import AdminView
+            AdminView.main().showadminhome(user)
         else:
             from View import UserView
             UserView.main().showuserhome(user)
