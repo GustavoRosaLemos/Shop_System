@@ -75,6 +75,6 @@ class ProductController():
                 print(f"{bcolors.OKGREEN}Compra de {i['name']} no valor de R${i['price']} realizada com sucesso!{bcolors.ENDC}")
             else:
                 print(f"{bcolors.FAIL}Falha na Compra: Você não possui saldo suficiente no cartão.{bcolors.ENDC}")
-                UserView.main().showusercategorys(user)
+                UserView.main().showusercategories(user)
         UserView.main().clearcart()
-        UserView.main().showusercategorys(user)
+        UserView.main().showusercategories(user)
