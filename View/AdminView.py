@@ -259,7 +259,6 @@ class main:
                 admin = True
             else:
                 admin = False
-
             if not name == editUser["name"]:
                 editUser["name"] = name
             if not birth == editUser["birth"]:
@@ -272,7 +271,6 @@ class main:
                 editUser["password"] = password
             if not admin == editUser["admin"]:
                 editUser["admin"] = admin
-
             from Model import UserModal
             try:
                 UserController.UserControl().update(
@@ -282,10 +280,27 @@ class main:
                 main.usersoption(self, user)
             except:
                 print(f"{bcolors.WARNING}Não foi possível alterar o usuario, tente novamente em alguns anos.{bcolors.ENDC}")
+
         elif selected == 3:
-            pass # rem
+            from Controller import UserController
+            print(f"\n{bcolors.BOLD}Insira o CPF do cliente que você deseja remover.{bcolors.ENDC}\n")
+            cpf = input("CPF: ")
+            cpf = cpf.replace(".", "")
+            cpf = cpf.replace("-", "")
+            remvUser = UserController.UserControl().get_by_cpf(cpf)
+            if not remvUser:
+                print(f"{bcolors.FAIL}Não foi possível encontrar um usuario com esse cpf!{bcolors.ENDC}")
+            UserController.UserControl().delete(remvUser['cpf'], "Model/Users.txt")
+            print(f"{bcolors.OKBLUE}Usuario removido com sucesso!")
+            main.usersoption(self, user)
         elif selected == 4:
-            pass # list
+            from Controller import UserController
+            list = UserController.UserControl().get_users()
+
+            for i in list:
+                print(f"{bcolors.BOLD}Nome:{bcolors.ENDC} {i['name']} {bcolors.BOLD}- Data de Nascimento:{bcolors.ENDC} {i['birth']} {bcolors.BOLD}- CPF:{bcolors.ENDC} {i['cpf']} {bcolors.BOLD}- Email:{bcolors.ENDC} {i['email']} {bcolors.BOLD}- Senha:{bcolors.ENDC} {i['password']} {bcolors.BOLD}- Admin:{bcolors.ENDC} {i['admin']}")
+            input("\nPressione qualquer tecla para voltar...")
+            main.usersoption(self, user)
         elif selected == 5:
             pass # serach
 
