@@ -68,12 +68,12 @@ class main:
         print(f"{bcolors.BOLD}Selecione um produto:{bcolors.ENDC}")
         from Controller import ProductController
         products = ProductController.ProductController().get_products()
+        print(f"{bcolors.WARNING} EXISTEM {random.randint(1000000, 9999999999999999999999)} USUARIOS INTERESSADOS NO PRODUTO QUE VOCÊ ESTÁ VENDO AGORA!{bcolors.ENDC}")
+        print(f"{bcolors.WARNING} !!!!50% OFF!!!! VOCÊ TEM 5 SEGUNDOS PARA APROVEITAR A PROMOÇÃO EXCLUSIVA!{bcolors.ENDC}")
         for i in range(len(products)):
             if products[i]['category'] == category:
                 print(f"{i+1} - {products[i]['name']} - {bcolors.OKGREEN}R${products[i]['price']}{bcolors.ENDC}")
         print("0 - Voltar")
-        print(f"{bcolors.WARNING} EXISTEM {random.randint(1000000, 9999999999999999999999)} USUARIOS INTERESSADOS NO PRODUTO QUE VOCÊ ESTÁ VENDO AGORA!{bcolors.ENDC}")
-        print(f"{bcolors.WARNING} !!!!50% OFF!!!! VOCÊ TEM 5 SEGUNDOS PARA APROVEITAR A PROMOÇÃO EXCLUSIVA!{bcolors.ENDC}")
 
         product = input("")
         try:
