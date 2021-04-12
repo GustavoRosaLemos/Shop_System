@@ -12,7 +12,7 @@ cards = lista
 class cardcontrol:
     def add_card(self, card, locale):
         cards.append({"number": card.getnumber(),
-                       "cvv": card.getccv(),
+                       "cvv": card.getcvv(),
                        "date": card.getdate(),
                        "funds": card.getfunds()
                        })

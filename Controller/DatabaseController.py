@@ -32,5 +32,8 @@ class DatabaseController:
             with open("Model/Category.txt", "w") as file:
                 file.write("[]")
 
-        #print("Banco de dados iniciado!")
-
+        # Criar a tabela History caso não exista
+        try:
+            history = open("Model/History.txt", "r")
+        except:
+            history = open("Model/History.txt", "x")

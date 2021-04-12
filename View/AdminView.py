@@ -26,10 +26,10 @@ class main:
             selected = int(selected)
         except:
             print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.")
-            main.showadmincategories(user)
+            main.usersoption(user)
         if selected < 0 or selected > 5:
             print(f"{bcolors.FAIL}Selecione uma opção válida!")
-            main.showadmincategories(self, user)
+            main.usersoption(self, user)
         if selected == 0:
             main.showadmincategories(self, user)
         elif selected == 1:
@@ -316,17 +316,16 @@ class main:
         print("2 - Modificar")
         print("3 - Remover")
         print("4 - Lista de Produtos")
-        print("5 - Pesquisar")
         print("0 - Voltar")
         selected = input()
         try:
             selected = int(selected)
         except:
             print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.{bcolors.ENDC}")
-            main.showadmincategories(user)
-        if selected < 0 or selected > 5:
+            main.productsoptions(user)
+        if selected < 0 or selected > 4:
             print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
-            main.showadmincategories(self, user)
+            main.productsoptions(self, user)
         if selected == 0:
             main.showadmincategories(self, user)
         elif selected == 1:
@@ -348,19 +347,211 @@ class main:
             try:
                 category = int(category)
             except:
-                print(f"{bcolors.FAIL}Você precia insirir o ID da categoria.{bcolors.ENDC}")
+                print(f"{bcolors.FAIL}Você precisa insirir o ID da categoria.{bcolors.ENDC}")
             if not CategoryController.CategoryController().get_by_id(category):
                 print(f"{bcolors.FAIL}Não foi possível localizar a categoria com esse ID!{bcolors.ENDC}")
                 main.productsoptions(self, user)
             try:
-                float(price)
+                price = float(price)
+                if price < 0:
+                    print(f"{bcolors.FAIL}Você não pode colocar preços negativos!{bcolors.ENDC}")
+                    main.productsoptions(self, user)
+                price = str(price)
             except:
                 print(f"{bcolors.FAIL}O valor do produto é inválido!{bcolors.ENDC}")
                 main.productsoptions(self, user)
             else:
                 from Model import ProductModal
                 ProductController.ProductController().add_product(ProductModal.Product("0", name, price, category), "Model/Products.txt")
-                print(f"{bcolors.OKGREEN}Produto adicionado com sucesso!")
+                print(f"{bcolors.OKGREEN}Produto adicionado com sucesso!{bcolors.ENDC}")
+        elif selected == 2:
+            resultid = input("ID do produto a ser alterado: ")
+            from Controller import ProductController
+            try:
+                resultid = int(resultid)
+            except:
+                print(f"{bcolors.FAIL}Digite o número do ID do produto a ser pesquisado!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            result = ProductController.ProductController().get_by_id(resultid)
+            print(f"{bcolors.BOLD}Não coloque nada nos campos que não deseja modificar.{bcolors.ENDC}")
+            name = input("Nome: ")
+            price = input("Valor: ")
+            category = input("Categoria: ")
+            if not result:
+                print(f"{bcolors.FAIL}Não foi possível localizar nenhum produto com esse ID.{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            if name == "":
+                name = result['name']
+            if price == "":
+                price = result['price']
+            if category == "":
+                category = result['category']
+            if not result['name'] == name:
+                result['name'] = name
+            if not result['price']:
+                result['price'] = price
+            if not result['category']:
+                result['category'] = category
+            from Model import ProductModal
+            ProductController.ProductController().update(ProductModal.Product(result['id'],result['name'], result['price'],
+                                                                              result['category']), "Model/Products.txt")
+            print(f"{bcolors.OKGREEN}Produto alterado com sucesso!{bcolors.ENDC}")
+            main.productsoptions(self, user)
+        elif selected == 3:
+            remove = input("ID do produto a ser removido: ")
+            try:
+                remove = int(remove)
+            except:
+                print(f"{bcolors.WARNING}Digite o ID do produto que você deseja adicionar!")
+                main.productsoptions(self, user)
+            from Controller import ProductController
+            result = ProductController.ProductController().get_by_id(remove)
+            if not result:
+                print(f"{bcolors.FAIL}Não foi possível localizar o produto a ser removido!")
+                main.productsoptions(self, user)
+            ProductController.ProductController().delete(remove, "Model/Products.txt")
+            print(f"{bcolors.OKGREEN}Produto removido com sucesso!")
+            main.productsoptions()
+        elif selected == 4:
+            from Controller import ProductController
+            result = ProductController.ProductController().get_products()
+
+            print(f"\n{bcolors.BOLD}Lista de Produtos:{bcolors.ENDC}")
+            if not result:
+                print("Vazio!")
+            for i in range(len(result)):
+                print(f"{bcolors.BOLD}ID: {bcolors.ENDC}{result[i]['id']}{bcolors.BOLD} - NOME:{bcolors.ENDC} {result[i]['name']}{bcolors.BOLD} - VALOR: {bcolors.ENDC}R${result[i]['price']}{bcolors.BOLD} - CATEGORIA:{bcolors.ENDC} {result[i]['category']}")
+            input("Pressione ENTER para continuar...")
+            main.productsoptions(self, user)
+
+    def categoriesoptions(self, user):
+        print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
+        print("1 - Adicionar")
+        print("2 - Remover")
+        print("3 - Lista de Categorias")
+        print("0 - Voltar")
+        selected = input()
+        try:
+            selected = int(selected)
+        except:
+            print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.{bcolors.ENDC}")
+            main.showadmincategories(user)
+        if selected < 0 or selected > 4:
+            print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
+            main.categoriesoptions(self, user)
+        if selected == 0:
+            main.showadmincategories(self, user)
+        elif selected == 1:
+            name = input("Nome: ")
+            if name == "":
+                print(f"{bcolors.FAIL}O nome da categoria não pode ser vazia!{bcolors.ENDC}")
+            from Controller import CategoryController
+            from Model import CategoryModal
+            CategoryController.CategoryController().add_category(CategoryModal.Category(1, name), "Model/Category.txt")
+            print(f"{bcolors.OKGREEN}Categoria adiconada com sucesso!{bcolors.ENDC}")
+            main.categoriesoptions(self, user)
+        elif selected == 2:
+            from Controller import CategoryController
+            remove = input("ID da categoria a ser removida: ")
+            try:
+                remove = int(remove)
+            except:
+                print(f"{bcolors.FAIL}Você precisa digitar o número do ID da categoria que deseja remover.")
+                main.categoriesoptions(self, user)
+            if not CategoryController.CategoryController().get_by_id(remove):
+                print(f"{bcolors.FAIL}Não foi possível localizar a categoria")
+                main.categoriesoptions(self, user)
+            CategoryController.CategoryController().delete(remove, "Model/Category.txt")
+            print(f"{bcolors.OKGREEN}Categoria removida com sucesso!")
+            main.categoriesoptions(self, user)
+        elif selected == 3:
+            from Controller import CategoryController
+            result = CategoryController.CategoryController().get_categories()
+            for i in result:
+                print(f"{bcolors.BOLD}ID:{bcolors.ENDC} {i['id']}{bcolors.BOLD} - NOME:{bcolors.ENDC} {i['name']}")
+            input("Pressione ENTER para continuar...")
+            main.categoriesoptions(self, user)
+
+    def cardsoptions(self, user):
+        print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
+        print("1 - Adicionar")
+        print("2 - Remover")
+        print("3 - Lista de Cartões")
+        print("0 - Voltar")
+        selected = input()
+        try:
+            selected = int(selected)
+        except:
+            print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.{bcolors.ENDC}")
+            main.cardsoptions(user)
+        if selected < 0 or selected > 4:
+            print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
+            main.cardsoptions(self, user)
+        if selected == 0:
+            main.showadmincategories(self, user)
+        elif selected == 1:
+            number = input("Numero: ")
+            if number == "":
+                print(f"{bcolors.WARNING}O número do cartão não pode ser vazio!{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            from Controller import CardController
+            if CardController.cardcontrol().get_by_number(number):
+                print(f"{bcolors.WARNING}Já existe um cartão com esse número!{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            cvv = input("CVV: ")
+            if cvv == "":
+                print(f"{bcolors.WARNING}O CVV do cartão não pode ser vazio!{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            date = input("Data: (MM/AAAA) ")
+            if date == "":
+                print(f"{bcolors.WARNING}O data de validade do cartão não pode ser vazio!{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            datesplit = date.split("/")
+            if not "/" in date:
+                print(f"{bcolors.WARNING}A data de vencimento deve estar no formato (MM/AAAA).{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            if len(datesplit) > 2:
+                print(f"{bcolors.WARNING}A data de vencimento deve estar no formato (MM/AAAA).{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            for i in range(len(datesplit)):
+                if i == 0:
+                    if not len(datesplit[i]) == 2:
+                        print(f"{bcolors.WARNING}A data de vencimento deve estar no formato (MM/AAAA).{bcolors.ENDC}")
+                        main.cardsoptions(self, user)
+                elif i == 1:
+                    if not len(datesplit[i]) == 4:
+                        print(f"{bcolors.WARNING}A data de vencimento deve estar no formato (MM/AAAA).{bcolors.ENDC}")
+                        main.cardsoptions(self, user)
+            funds = input("Fundos: R$")
+            try:
+                float(funds)
+            except:
+                print(f"{bcolors.FAIL}O valor inserido nos fundos do cartão é inválido!.{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            from Model import CardModal
+            CardController.cardcontrol().add_card(CardModal.Card(number, cvv, date, funds), "Model/Cards.txt")
+            print(f"{bcolors.OKGREEN}Cartão adicionado com sucesso!{bcolors.ENDC}")
+            main.cardsoptions(self, user)
+        elif selected == 2:
+            number = input("Numero do cartão a ser removido: ")
+            from Controller import CardController
+            result = CardController.cardcontrol().get_by_number(number)
+            if not result:
+                print(f"{bcolors.WARNING}Não foi possível localizar o cartão com esse número.{bcolors.ENDC}")
+                main.cardsoptions(self, user)
+            else:
+                CardController.cardcontrol().delete(number, "Model/Cards.txt")
+                print(f"{bcolors.OKGREEN}Cartão adicionado com sucesso!{bcolors.ENDC}")
+        elif selected == 3:
+            from Controller import CardController
+            result = CardController.cardcontrol().getcards()
+            if not result:
+                print("Não existe nenhum cartão cadastrado!")
+            for i in result:
+                print(f"{bcolors.BOLD}NÚMERO:{bcolors.ENDC} {i['number']}{bcolors.BOLD} - CVV:{bcolors.ENDC} {i['cvv']}{bcolors.BOLD} - DATA DE VALIDADE:{bcolors.ENDC} {i['date']}{bcolors.BOLD} - SALDO:{bcolors.ENDC} R${i['funds']}")
+            input("Pressione ENTER para continuar...")
+            main.cardsoptions(self, user)
+
 
     def showadmincategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
@@ -368,6 +559,7 @@ class main:
         print(f"2 - Produtos")
         print(f"3 - Categorias")
         print(f"4 - Cartões")
+        print(f"5 - Historico de Vendas")
         print(f"0 - Sair")
         selected = input()
         try:
@@ -375,7 +567,7 @@ class main:
         except:
             print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.")
             main.showadmincategories(user)
-        if selected < 0 or selected > 4:
+        if selected < 0 or selected > 5:
             print(f"{bcolors.FAIL}Selecione uma opção válida!")
             main.showadmincategories(self, user)
         if selected == 0:
@@ -384,7 +576,11 @@ class main:
             main.usersoption(self, user)
         elif selected == 2:
             main.productsoptions(self, user)
+        elif selected == 3:
+            main.categoriesoptions(self, user)
         elif selected == 4:
+            main.cardsoptions(self, user)
+        elif selected == 5:
             pass
 
     def showadminhome(self, user):

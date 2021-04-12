@@ -44,13 +44,32 @@ class main:
         global cart
         cart = []
 
+    def selectpaymethod(self, user):
+        print("1 - Cartão")
+        print("2 - Dinheiro")
+        print("0 - Voltar")
+        selected = input("")
+
+        try:
+            selected = int(selected)
+        except:
+            print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
+            main.showusercategories(self, user)
+
+        if selected == 0:
+            main.showusercategories(self, user)
+        elif selected == 1:
+            main.putcard(self, user, cart)
+        elif selected == 2:
+            from Controller import ProductController
+            ProductController.ProductController().buymoney(cart, user)
+
     def showuserproducts(self, user, category):
         print(f"{bcolors.BOLD}Selecione um produto:{bcolors.ENDC}")
         from Controller import ProductController
-        print(category)
         products = ProductController.ProductController().get_products()
         for i in range(len(products)):
-            if products[i]['category'] == str(category):
+            if products[i]['category'] == category:
                 print(f"{i+1} - {products[i]['name']} - {bcolors.OKGREEN}R${products[i]['price']}{bcolors.ENDC}")
         print("0 - Voltar")
         print(f"{bcolors.WARNING} EXISTEM {random.randint(1000000, 9999999999999999999999)} USUARIOS INTERESSADOS NO PRODUTO QUE VOCÊ ESTÁ VENDO AGORA!{bcolors.ENDC}")
@@ -72,7 +91,7 @@ class main:
         another = input("Continuar Comprando: ")
         if another.lower() == "sim" or another.lower() == "sin" or another.lower() == "si" or another.lower() == "s" or another.lower() == "yes":
             main.showusercategories(self, user)
-        main.putcard(self, user, cart)
+        main.selectpaymethod(self, user)
 
     def cartremovequestion(self, user):
         response = input("Deseja remover algum item? (Sim/Não) ")

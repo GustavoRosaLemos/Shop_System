@@ -14,7 +14,7 @@ class CategoryController():
         if len(categories) == 0:
             id = 1
         else:
-            id = str(int(categories[len(categories) - 1]["id"]) + 1)
+            id = int(categories[len(categories) - 1]["id"]) + 1
         categories.append({"id": id,
                       "name": category.getname()
                       })

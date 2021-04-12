@@ -1,4 +1,5 @@
 from ast import literal_eval
+import datetime
 
 class bcolors:
     HEADER = '\033[95m'
@@ -66,16 +67,55 @@ class ProductController():
             file.write(str(products))
             file.close()
 
+    def addhistory(self, cart, user, card, totalprice):
+        with open("Model/History.txt", "a") as file:
+            file.write(f"USUARIO: {user['name']} EMAIL: {user['email']} VALOR: R${totalprice} PAGAMENTO: Cartão {card['number']} ITENS: {str(cart)} DATA: {datetime.datetime.now()}\n")
+    def addmoneyhistory(self, cart, user, totalprice):
+        with open("Model/History.txt", "a") as file:
+            file.write(f"USUARIO: {user['name']} EMAIL: {user['email']} VALOR: R${totalprice} PAGAMENTO: Dinheiro ITENS: {str(cart)} DATA: {datetime.datetime.now()}\n")
+
     def buy(self, cart, user, card):
         from View import UserView
+        totalprice = 0
         for i in cart:
-            if float(i["price"]) <= float(card["funds"]):
-                from Controller import CardController
-                price = str(float(card["funds"]) - float(i["price"]))
-                CardController.cardcontrol().update(card["number"], price, "Model/Cards.txt")
-                print(f"{bcolors.OKGREEN}Compra de {i['name']} no valor de R${i['price']} realizada com sucesso!{bcolors.ENDC}")
-            else:
-                print(f"{bcolors.FAIL}Falha na Compra: Você não possui saldo suficiente no cartão.{bcolors.ENDC}")
-                UserView.main().showusercategories(user)
+            totalprice += float(i['price'])
+        if totalprice <= float(card["funds"]):
+            from Controller import CardController
+            price = str(float(card["funds"]) - float(totalprice))
+            CardController.cardcontrol().update(card["number"], price, "Model/Cards.txt")
+            ProductController.addhistory(self, cart, user, card, totalprice)
+            print(f"{bcolors.OKGREEN}Compra no valor de R${totalprice} realizada com sucesso!{bcolors.ENDC}")
+        else:
+            print(f"{bcolors.FAIL}Falha na Compra: Você não possui saldo suficiente no cartão.{bcolors.ENDC}")
+            UserView.main().showusercategories(user)
+        UserView.main().clearcart()
+        UserView.main().showusercategories(user)
+
+    def buymoney(self, cart, user):
+        from View import UserView
+        totalprice = 0
+        for i in cart:
+            totalprice += float(i['price'])
+        print(f"Custo total: R${str(totalprice)}")
+        payvalue = input("Digite o valor: R$")
+        try:
+            payvalue = float(payvalue)
+        except:
+            print(f"{bcolors.FAIL}O valor inserido é inválido!")
+            ProductController.buymoney(self, cart, user)
+
+        if totalprice <= payvalue:
+            if payvalue <= 0:
+                print(f"{bcolors.FAIL}O valor inserido é inválido!")
+                ProductController.buymoney(self, cart, user)
+            from Controller import CardController
+            price = payvalue - float(totalprice)
+            ProductController.addmoneyhistory(self, cart, user, totalprice)
+            if price > 0:
+                print(f"{bcolors.WARNING}Troco necessário: {price}{bcolors.ENDC}")
+            print(f"{bcolors.OKGREEN}Compra no valor de R${totalprice} realizada com sucesso!{bcolors.ENDC}")
+        else:
+            print(f"{bcolors.FAIL}Falha na Compra: Você não possui saldo suficiente no cartão.{bcolors.ENDC}")
+            UserView.main().showusercategories(user)
         UserView.main().clearcart()
         UserView.main().showusercategories(user)
