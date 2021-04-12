@@ -296,13 +296,20 @@ class main:
         elif selected == 4:
             from Controller import UserController
             list = UserController.UserControl().get_users()
-
             for i in list:
                 print(f"{bcolors.BOLD}Nome:{bcolors.ENDC} {i['name']} {bcolors.BOLD}- Data de Nascimento:{bcolors.ENDC} {i['birth']} {bcolors.BOLD}- CPF:{bcolors.ENDC} {i['cpf']} {bcolors.BOLD}- Email:{bcolors.ENDC} {i['email']} {bcolors.BOLD}- Senha:{bcolors.ENDC} {i['password']} {bcolors.BOLD}- Admin:{bcolors.ENDC} {i['admin']}")
             input("\nPressione qualquer tecla para voltar...")
             main.usersoption(self, user)
         elif selected == 5:
-            pass # serach
+            cpf = input("CPF: ")
+            cpf = cpf.replace(".", "")
+            cpf = cpf.replace("-", "")
+            from Controller import UserController
+            result = UserController.UserControl().get_by_cpf(cpf)
+            print(f"{bcolors.BOLD}Nome:{bcolors.ENDC} {result['name']} {bcolors.BOLD}- Data de Nascimento:{bcolors.ENDC} {result['birth']} {bcolors.BOLD}- CPF:{bcolors.ENDC} {result['cpf']} {bcolors.BOLD}- Email:{bcolors.ENDC} {result['email']} {bcolors.BOLD}- Senha:{bcolors.ENDC} {result['password']} {bcolors.BOLD}- Admin:{bcolors.ENDC} {result['admin']}")
+            input("\nPressione qualquer tecla para voltar...")
+            main.usersoption(self, user)
+
 
     def showadmincategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
