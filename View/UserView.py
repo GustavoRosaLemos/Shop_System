@@ -12,35 +12,36 @@ class bcolors:
     UNDERLINE = '\033[4m'
 cart = []
 class main:
-    def putcard(self, product, user, cart):
+    def putcard(self, user, cart):
         print(f"{bcolors.BOLD}Insida os dados do seu cartão:{bcolors.ENDC}")
         number = input("Numero: ")
         cvv = input("cvv: ")
         date = input("Data: ")
         if number == "":
             print(f"{bcolors.FAIL}Você precisa inserir o numero do cartão!{bcolors.ENDC}")
-            main.putcard(self, product, user, cart)
+            main.putcard(self, user, cart)
         if cvv == "":
             print(f"{bcolors.FAIL}Você precisa inserir o numero do cvv!{bcolors.ENDC}")
-            main.putcard(self, product, user, cart)
+            main.putcard(self, user, cart)
         if date == "":
             print(f"{bcolors.FAIL}Você precisa inserir o numero de vencimento do cartão!{bcolors.ENDC}")
-            main.putcard(self, product, user, cart)
+            main.putcard(self, user, cart)
 
         from Controller import CardController
         card = CardController.cardcontrol().get_by_number(number)
         if not card:
             print(f"{bcolors.FAIL} O cartão que você inseriu não existe!{bcolors.ENDC}")
-            main.putcard(self, product, user, cart)
+            main.putcard(self, user, cart)
 
         if not card['cvv'] == cvv and not card['date'] == date:
             print(f"{bcolors.FAIL} Os dados do cartão que você inseriu não estão corretos!{bcolors.ENDC}")
-            main.putcard(self, product, user, cart)
+            main.putcard(self, user, cart)
 
         from Controller import ProductController
         ProductController.ProductController().buy(cart, user, card)
 
     def clearcart(self):
+        global cart
         cart = []
 
     def showuserproducts(self, user, category):
@@ -71,7 +72,40 @@ class main:
         another = input("Continuar Comprando: ")
         if another.lower() == "sim" or another.lower() == "sin" or another.lower() == "si" or another.lower() == "s" or another.lower() == "yes":
             main.showusercategories(self, user)
-        main.putcard(self, product, user, cart)
+        main.putcard(self, user, cart)
+
+    def cartremovequestion(self, user):
+        response = input("Deseja remover algum item? (Sim/Não) ")
+        if response.lower() == "sim" or response.lower() == "s" or response.lower() == "sin" or response.lower() == "si" or response.lower() == "yes":
+            for i in range(len(cart)):
+                print(f"{bcolors.BOLD}ID: {bcolors.ENDC}{i}{bcolors.BOLD} - NOME:{bcolors.ENDC} {cart[i]['name']}{bcolors.BOLD} - VALOR: {bcolors.ENDC}R${cart[i]['price']}")
+            response = input("Digite o ID que deseja remover: ")
+            if response == "":
+                main.showusercategories()
+            try:
+                response = int(response)
+            except:
+                print(f"{bcolors.FAIL}Resposta inválida! Digite o número do item que deseja remover.{bcolors.ENDC}")
+                main.cartremovequestion(self, user)
+            if response >= 0 and response <= len(cart):
+                cart.pop(response)
+                print(f"{bcolors.OKGREEN}Item removido com sucesso!{bcolors.ENDC}")
+                main.cartremovequestion(self, user)
+        elif response.lower() == "n" or response.lower() == "não" or response.lower() == "nao" or response.lower() == "na":
+            main.cartcompletequestion(self, user)
+        else:
+            print(f"{bcolors.FAIL}Resposta inválida! Responda com sim ou não{bcolors.ENDC}")
+            main.cartremovequestion(self, user)
+
+    def cartcompletequestion(self, user):
+        response = input("Deseja finaliza a compra? (Sim/Não) ")
+        if response.lower() == "sim" or response.lower() == "s" or response.lower() == "sin" or response.lower() == "si" or response.lower() == "yes":
+            main.putcard(self, user, cart)
+        elif response.lower() == "n" or response.lower() == "não" or response.lower() == "nao" or response.lower() == "na":
+            main.showusercategories(self, user)
+        else:
+            print(f"{bcolors.FAIL}Resposta inválida! Responda com sim ou não{bcolors.ENDC}")
+            main.cartcompletequestion(self, user)
 
     def showusercategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma categoria:{bcolors.ENDC}")
@@ -79,7 +113,7 @@ class main:
         categories = CategoryController.CategoryController().get_categories()
         for i in range(len(categories)):
             print(f"{i+1} - {categories[i]['name']}")
-        print("0 - Sair")
+        print("0 - Carrinho de Compras")
         category = input("")
 
         try:
@@ -87,11 +121,19 @@ class main:
         except:
             main.showusercategories(self, user)
         if category == 0:
-            quit()
+            print(f"\n{bcolors.BOLD}CARRINHO DE COMPRAS:{bcolors.ENDC}")
+            if not cart:
+                print("Você não possui nenhum item no carrinho!")
+            for i in range(len(cart)):
+                print(f"{bcolors.BOLD}ID: {bcolors.ENDC}{i}{bcolors.BOLD} - NOME:{bcolors.ENDC} {cart[i]['name']}{bcolors.BOLD} - VALOR: {bcolors.ENDC}R${cart[i]['price']}")
+            input("Pressione qualquer tecla para continuar...")
+            if cart:
+                main.cartremovequestion(self, user)
+            else:
+                main.showusercategories(self, user)
         if not category >= 1 and not category <= len(categories):
             print(f"{bcolors.WARNING}Selecione um produto válido!{bcolors.ENDC}")
             main.showusercategories(self, user)
-
         category = categories[category - 1]["id"]
         main.showuserproducts(self, user, category)
 
