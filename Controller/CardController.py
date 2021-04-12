@@ -42,6 +42,7 @@ class cardcontrol:
         for i in range(len(cards)):
             if cards[i]["number"] == number:
                 cards.pop(i)
+                break
         with open(locale, "w") as file:
             file.write(str(cards))
             file.close()

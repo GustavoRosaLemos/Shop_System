@@ -25,7 +25,7 @@ class ProductController():
         if len(products) == 0:
             id = 1
         else:
-            id = str(int(products[len(products) - 1]["id"]) + 1)
+            id = int(products[len(products) - 1]["id"]) + 1
         products.append({"id": id,
                       "name": product.getname(),
                       "price": product.getprice(),
@@ -57,10 +57,11 @@ class ProductController():
         with open(locale, "w") as file:
             file.write(str(products))
 
-    def delete(self, number, locale):
+    def delete(self, id, locale):
         for i in range(len(products)):
-            if products[i]["number"] == number:
+            if products[i]["id"] == id:
                 products.pop(i)
+                break
         with open(locale, "w") as file:
             file.write(str(products))
             file.close()

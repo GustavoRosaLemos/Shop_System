@@ -47,6 +47,7 @@ class CategoryController():
         for i in range(len(categories)):
             if categories[i]["id"] == id:
                 categories.pop(i)
+                break
         with open(locale, "w") as file:
             file.write(str(categories))
             file.flush()

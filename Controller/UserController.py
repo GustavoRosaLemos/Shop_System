@@ -76,6 +76,7 @@ class UserControl:
         for i in range(len(users)):
             if users[i]["cpf"] == cpf:
                 users.pop(i)
+                break
         with open(locale, "w") as file:
             file.write(str(users))
             file.close()
