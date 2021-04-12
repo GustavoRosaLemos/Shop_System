@@ -150,6 +150,7 @@ class main:
                 main.usersoption(self, user)
             except:
                 print(f"{bcolors.WARNING}Não foi possível realizar o cadastro, tente novamente em alguns anos.{bcolors.ENDC}")
+                main.usersoption(self, user)
 
         elif selected == 2:
             from Controller import UserController
@@ -160,6 +161,7 @@ class main:
             editUser = UserController.UserControl().get_by_cpf(cpf)
             if not editUser:
                 print(f"{bcolors.FAIL}Não foi possível encontrar um usuario com esse cpf!{bcolors.ENDC}")
+                main.usersoption(self, user)
             print(f"\n{bcolors.BOLD}Insira somente os dados que você deseja modificar!{bcolors.ENDC}\n")
             name = input("Nome: ")
             birth = input("Data de Nasciamento: ")
@@ -167,7 +169,6 @@ class main:
             email = input("Email: ")
             password = input("Senha: ")
             admin = input("Admin(Sim/Não): ")
-
             if name == "":
                 name = editUser["name"]
             if birth == "":
@@ -181,7 +182,6 @@ class main:
             if not "/" in birth:
                 print(f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
                 main.usersoption(self, user)
-
             for i in range(len(birth)):
                 if birth[i] in string.ascii_letters:
                     print(f"{bcolors.FAIL}Sua data de nascimento não pode conter letras!{bcolors.ENDC}")
@@ -195,30 +195,26 @@ class main:
             for i in range(3):
                 if i == 0:
                     if not len(sbirth[i]) == 2:
-                        print(
-                            f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
+                        print(f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
                         main.usersoption(self, user)
                     if not int(sbirth[i]) >= 0 or not int(sbirth[i]) <= 31:
                         print(f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 01 a 31 dias{bcolors.ENDC}")
                         main.usersoption(self, user)
                 if i == 1:
                     if not len(sbirth[i]) == 2:
-                        print(
-                            f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
+                        print(f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
                         main.usersoption(self, user)
                     elif not int(sbirth[i]) >= 0 or not int(sbirth[i]) <= 12:
                         print(f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 01 a 12 meses{bcolors.ENDC}")
                         main.usersoption(self, user)
                 if i == 2:
                     if not len(sbirth[i]) == 4:
-                        print(
-                            f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
+                        print(f"{bcolors.FAIL}Sua data de nascimento precisa estar no formato (DD/MM/AAAA){bcolors.ENDC}")
                         main.usersoption(self, user)
                     date = datetime.datetime.now()
                     date = date.strftime('%Y')
                     if not int(sbirth[i]) >= 1900 or not (int(sbirth[i]) <= int(date)):
-                        print(
-                            f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 1900 a {date} meses{bcolors.ENDC}")
+                        print(f"{bcolors.FAIL}Sua data de nascimento precisa estar entre 1900 a {date} meses{bcolors.ENDC}")
                         main.usersoption(self, user)
             cpf = cpf.replace(".", "")
             cpf = cpf.replace("-", "")
@@ -280,6 +276,7 @@ class main:
                 main.usersoption(self, user)
             except:
                 print(f"{bcolors.WARNING}Não foi possível alterar o usuario, tente novamente em alguns anos.{bcolors.ENDC}")
+                main.usersoption(self, user)
 
         elif selected == 3:
             from Controller import UserController
@@ -348,6 +345,7 @@ class main:
                 category = int(category)
             except:
                 print(f"{bcolors.FAIL}Você precisa insirir o ID da categoria.{bcolors.ENDC}")
+                main.productsoptions(self, user)
             if not CategoryController.CategoryController().get_by_id(category):
                 print(f"{bcolors.FAIL}Não foi possível localizar a categoria com esse ID!{bcolors.ENDC}")
                 main.productsoptions(self, user)
@@ -364,6 +362,7 @@ class main:
                 from Model import ProductModal
                 ProductController.ProductController().add_product(ProductModal.Product("0", name, price, category), "Model/Products.txt")
                 print(f"{bcolors.OKGREEN}Produto adicionado com sucesso!{bcolors.ENDC}")
+                main.productsoptions(self, user)
         elif selected == 2:
             resultid = input("ID do produto a ser alterado: ")
             from Controller import ProductController
@@ -435,7 +434,7 @@ class main:
             selected = int(selected)
         except:
             print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.{bcolors.ENDC}")
-            main.showadmincategories(user)
+            main.categoriesoptions(self, user)
         if selected < 0 or selected > 4:
             print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
             main.categoriesoptions(self, user)
@@ -445,6 +444,7 @@ class main:
             name = input("Nome: ")
             if name == "":
                 print(f"{bcolors.FAIL}O nome da categoria não pode ser vazia!{bcolors.ENDC}")
+                main.categoriesoptions(self, user)
             from Controller import CategoryController
             from Model import CategoryModal
             CategoryController.CategoryController().add_category(CategoryModal.Category(1, name), "Model/Category.txt")
@@ -542,6 +542,7 @@ class main:
             else:
                 CardController.cardcontrol().delete(number, "Model/Cards.txt")
                 print(f"{bcolors.OKGREEN}Cartão adicionado com sucesso!{bcolors.ENDC}")
+                main.cardsoptions(self, user)
         elif selected == 3:
             from Controller import CardController
             result = CardController.cardcontrol().getcards()
