@@ -37,3 +37,5 @@ class DatabaseController:
             history = open("Model/History.txt", "r")
         except:
             history = open("Model/History.txt", "x")
+            with open("Model/History.txt", "w") as file:
+                file.write("[]")

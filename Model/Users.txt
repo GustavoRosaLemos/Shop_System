@@ -1,1 +1,1 @@
-[{'id': 1, 'name': 'Gabe Logan Newell', 'birth': '03/11/1962', 'cpf': '90510647057', 'email': 'gabe@valve.com', 'password': 'hallflife3', 'admin': True}]
+[{'id': 1, 'name': 'Gabe Logan Newell', 'birth': '03/11/1962', 'cpf': '90510647057', 'email': 'gabe@valve.com', 'password': 'hallflife3', 'admin': True}, {'id': '2', 'name': 'Carlos Jose', 'birth': '10/10/2020', 'cpf': '01042979057', 'email': 'email@email.com', 'password': 'password', 'admin': False}]

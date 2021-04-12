@@ -552,6 +552,18 @@ class main:
             input("Pressione ENTER para continuar...")
             main.cardsoptions(self, user)
 
+    def showhistory(self, user):
+        from Controller import ProductController
+        result = ProductController.ProductController().gethistory()
+        for i in result:
+            if i['number'] == "NONE":
+                print(f"{bcolors.BOLD}NOME:{bcolors.ENDC} {i['name']}{bcolors.BOLD} - EMAIL:{bcolors.ENDC} {i['email']}{bcolors.BOLD} - VALOR:{bcolors.ENDC} R${i['value']}{bcolors.BOLD} - METODO:{bcolors.ENDC} {i['paymethod']}{bcolors.BOLD} {i['number']}{bcolors.BOLD} - ITENS:{bcolors.ENDC} {str(i['itens'])} {bcolors.BOLD} DATA:{bcolors.ENDC} {i['date']}")
+            else:
+                print(f"{bcolors.BOLD}NOME:{bcolors.ENDC} {i['name']}{bcolors.BOLD} - EMAIL:{bcolors.ENDC} {i['email']}{bcolors.BOLD} - VALOR:{bcolors.ENDC} R${i['value']}{bcolors.BOLD} - METODO:{bcolors.ENDC} {i['paymethod']}{bcolors.BOLD} - CARTAO:{bcolors.ENDC} {i['number']}{bcolors.BOLD} - ITENS:{bcolors.ENDC} {str(i['itens'])} {bcolors.BOLD} DATA:{bcolors.ENDC} {i['date']}")
+        if not result:
+            print("Vazio!")
+        input("Pressione ENTER para continuar...")
+        main.showadmincategories(self, user)
 
     def showadmincategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
@@ -581,7 +593,7 @@ class main:
         elif selected == 4:
             main.cardsoptions(self, user)
         elif selected == 5:
-            pass
+            main.showhistory(self, user)
 
     def showadminhome(self, user):
         print("-" * 187)

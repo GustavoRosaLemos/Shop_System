@@ -21,6 +21,12 @@ with open("Model/Products.txt", "r") as file:
         raise Exception("Erro no banco de dados. Não foi possível converter ID.")
 products = lista
 
+history = []
+with open("Model/History.txt", "r") as file:
+    file = file.read()
+    hist = literal_eval(file)
+history = hist
+
 class ProductController():
     def add_product(self, product, locale):
         if len(products) == 0:
@@ -68,11 +74,18 @@ class ProductController():
             file.close()
 
     def addhistory(self, cart, user, card, totalprice):
-        with open("Model/History.txt", "a") as file:
-            file.write(f"USUARIO: {user['name']} EMAIL: {user['email']} VALOR: R${totalprice} PAGAMENTO: Cartão {card['number']} ITENS: {str(cart)} DATA: {datetime.datetime.now()}\n")
+        history.append({"name": user['name'], "email": user['email'], "value": totalprice, "paymethod": "Cartão",
+                        "number": card['number'], "itens": cart, "date": str(datetime.datetime.now())})
+        with open("Model/History.txt", "w") as file:
+            file.write(str(history))
+
     def addmoneyhistory(self, cart, user, totalprice):
-        with open("Model/History.txt", "a") as file:
-            file.write(f"USUARIO: {user['name']} EMAIL: {user['email']} VALOR: R${totalprice} PAGAMENTO: Dinheiro ITENS: {str(cart)} DATA: {datetime.datetime.now()}\n")
+        history.append({"name": user['name'], "email": user['email'], "value": totalprice, "paymethod": "Dinheiro", "number": "NONE", "itens": cart, "date": str(datetime.datetime.now())})
+        with open("Model/History.txt", "w") as file:
+            file.write(str(history))
+
+    def gethistory(self):
+        return history
 
     def buy(self, cart, user, card):
         from View import UserView

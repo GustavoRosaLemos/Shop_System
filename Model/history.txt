@@ -1,1 +1,0 @@
-USUARIO: Carlos Jose EMAIL: email PREÇO: R$49.99 PAGAMENTO: Dinheiro ITENS: [{'id': 1, 'name': 'Filtro Solar Noturno', 'price': '49.99', 'category': 1}] DATA: 2021-04-12 12:53:20.752237

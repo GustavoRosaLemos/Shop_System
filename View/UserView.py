@@ -106,6 +106,9 @@ class main:
             except:
                 print(f"{bcolors.FAIL}Resposta inválida! Digite o número do item que deseja remover.{bcolors.ENDC}")
                 main.cartremovequestion(self, user)
+            if not cart:
+                print(f"{bcolors.WARNING}Você não possui itens no carrinho.{bcolors.ENDC}")
+                main.showusercategories(self, user)
             if response >= 0 and response <= len(cart):
                 cart.pop(response)
                 print(f"{bcolors.OKGREEN}Item removido com sucesso!{bcolors.ENDC}")
