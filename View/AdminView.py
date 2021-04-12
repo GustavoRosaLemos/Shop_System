@@ -310,6 +310,57 @@ class main:
             input("\nPressione qualquer tecla para voltar...")
             main.usersoption(self, user)
 
+    def productsoptions(self, user):
+        print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
+        print("1 - Adicionar")
+        print("2 - Modificar")
+        print("3 - Remover")
+        print("4 - Lista de Produtos")
+        print("5 - Pesquisar")
+        print("0 - Voltar")
+        selected = input()
+        try:
+            selected = int(selected)
+        except:
+            print(f"{bcolors.FAIL}Selecione uma opção digitando o seu número.{bcolors.ENDC}")
+            main.showadmincategories(user)
+        if selected < 0 or selected > 5:
+            print(f"{bcolors.FAIL}Selecione uma opção válida!{bcolors.ENDC}")
+            main.showadmincategories(self, user)
+        if selected == 0:
+            main.showadmincategories(self, user)
+        elif selected == 1:
+            name = input("Nome: ")
+            price = input("Valor: ")
+            category = input("Categoria: ")
+
+            if name == "":
+                print(f"{bcolors.WARNING}É necessario que você adicione um nome ao produto!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            if price == "":
+                print(f"{bcolors.WARNING}É necessario que você adicione um preço ao produto!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            if category == "":
+                print(f"{bcolors.WARNING}É necessario que você adicione uma categoria ao produto!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            from Controller import ProductController
+            from Controller import CategoryController
+            try:
+                category = int(category)
+            except:
+                print(f"{bcolors.FAIL}Você precia insirir o ID da categoria.{bcolors.ENDC}")
+            if not CategoryController.CategoryController().get_by_id(category):
+                print(f"{bcolors.FAIL}Não foi possível localizar a categoria com esse ID!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            try:
+                float(price)
+            except:
+                print(f"{bcolors.FAIL}O valor do produto é inválido!{bcolors.ENDC}")
+                main.productsoptions(self, user)
+            else:
+                from Model import ProductModal
+                ProductController.ProductController().add_product(ProductModal.Product("0", name, price, category), "Model/Products.txt")
+                print(f"{bcolors.OKGREEN}Produto adicionado com sucesso!")
 
     def showadmincategories(self, user):
         print(f"{bcolors.BOLD}Selecione uma opção:{bcolors.ENDC}")
@@ -332,7 +383,7 @@ class main:
         elif selected == 1:
             main.usersoption(self, user)
         elif selected == 2:
-            pass
+            main.productsoptions(self, user)
         elif selected == 4:
             pass
 
