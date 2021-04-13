@@ -374,7 +374,7 @@ class main:
             result = ProductController.ProductController().get_by_id(resultid)
             print(f"{bcolors.BOLD}Não coloque nada nos campos que não deseja modificar.{bcolors.ENDC}")
             name = input("Nome: ")
-            price = input("Valor: ")
+            price = input("Valor: R$")
             category = input("Categoria: ")
             if not result:
                 print(f"{bcolors.FAIL}Não foi possível localizar nenhum produto com esse ID.{bcolors.ENDC}")
@@ -387,9 +387,9 @@ class main:
                 category = result['category']
             if not result['name'] == name:
                 result['name'] = name
-            if not result['price']:
+            if not result['price'] == price:
                 result['price'] = price
-            if not result['category']:
+            if not result['category'] == category:
                 result['category'] = category
             from Model import ProductModal
             ProductController.ProductController().update(ProductModal.Product(result['id'],result['name'], result['price'],
